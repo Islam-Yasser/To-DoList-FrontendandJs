@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+  padding: 0;
+}
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #469fbc;
+  position: relative;
+}
+.container {
+  width: 50%;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.container .header {
+  font-size: xxx-large;
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: antiquewhite;
+}
+.container .descrip {
+  font-size: x-large;
+  text-transform: capitalize;
+  color: azure;
+}
+.container .descrip1 {
+  font-size: x-large;
+  color: #036703c2;
+}
+.container .remo {
+  font-size: x-large;
+  color: crimson;
+}
+.input {
+  width: 85%;
+  margin-left: 0px;
+  height: 2.5rem;
+  text-transform: capitalize;
+  color: rgba(0, 0, 0, 0.423);
+  margin-top: 3rem;
+  text-align: center;
+}
+.todo {
+  /* background-color: rgb(255, 255, 255); */
+  width: 100%;
+  height: auto;
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.todo div {
+  width: 90%;
+  height: 3.5rem;
+  border-radius: 20px;
+  font-family: "Nunito", sans-serif;
+  background-color: blanchedalmond;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  margin-top: 10px;
+  color: white;
+  font-size: x-large;
+  font-weight: 600;
+  text-shadow: black;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.todo .added .done{
+    position: absolute;
+    right: 0;
+    background-color: #00800074;
+    width: 70%;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-image: url(./done.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display:none;
+}
+.todo .added .delet{
+  color: black;
+    position: absolute;
+    background-image: url(./remove.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    left: 0px;
+    width: 30%;
+    background-color: crimson;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    display: none;
+}
+
+
