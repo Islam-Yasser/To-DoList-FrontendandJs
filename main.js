@@ -70,33 +70,36 @@ input.addEventListener("keypress", function (e) {
 });
 
 let elemns = document.querySelector(".todo");
-elemns.addEventListener("mouseover", function (event) {
+elemns.addEventListener("mousemove", mmove, false);
+function mmove(event) {
   if (event.target.classList.contains("added")) {
     var p = event.target.parentElement;
-    var index = Array.prototype.indexOf.call(p.children, event.target)
+    var index = Array.prototype.indexOf.call(p.children, event.target);
     let comp = document.getElementsByClassName("done");
     let dele = document.getElementsByClassName("delet");
-    comp[index].style.display = "block";
     comp[index].style.cursor = "pointer";
     dele[index].style.cursor = "pointer";
-    dele[index].style.display = "block";
+    comp[index].style.visibility = "visible";
+    dele[index].style.visibility = "visible";
     event.target.style.color = "black";
-    comp[index].addEventListener('click',function(e){
-        this.parentNode.remove();
+    comp[index].addEventListener("click", function (e) {
+      this.parentNode.remove();
     });
-    dele[index].addEventListener('click',function(e){
-        this.parentNode.remove();
+    dele[index].addEventListener("click", function (e) {
+      this.parentNode.remove();
     });
   }
-});
-elemns.addEventListener("mouseout", function (event) {
+}
+
+elemns.addEventListener("mouseleave", mleave, true);
+function mleave(event) {
   if (event.target.classList.contains("added")) {
     var p = event.target.parentElement;
-    var index = Array.prototype.indexOf.call(p.children, event.target)
+    var index = Array.prototype.indexOf.call(p.children, event.target);
     let comp = document.getElementsByClassName("done");
     let dele = document.getElementsByClassName("delet");
-    comp[index].style.display = "none";
-    dele[index].style.display = "none";
+    comp[index].style.visibility = "hidden";
+    dele[index].style.visibility = "hidden";
     event.target.style.color = "white";
   }
-});
+}
