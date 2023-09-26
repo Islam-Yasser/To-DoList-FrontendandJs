@@ -90,7 +90,7 @@ body {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    display:none;
+    visibility:hidden;
 }
 .todo .added .delet{
   color: black;
@@ -104,7 +104,13 @@ body {
     background-color: crimson;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
-    display: none;
+    visibility: hidden;
+}
+.Trash{
+  width: 20%;
+  min-height: 100vh;
+  background-color: white;
+  
 }
 
 
