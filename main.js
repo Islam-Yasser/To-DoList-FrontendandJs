@@ -13,7 +13,7 @@ desc1.className = "descrip1";
 desc1.textContent = "click on the item to mark it as complete";
 let remo = document.createElement("p");
 remo.className = "remo";
-remo.innerHTML = "click the 'X' to remove the item from your list";
+remo.innerHTML = "click the 'trash icon' to remove the item from your list";
 container.appendChild(desc);
 container.appendChild(desc1);
 container.appendChild(remo);
@@ -30,8 +30,8 @@ let trash = document.createElement("div");
 trash.className = "Trash";
 trash.style.width = "0%";
 trash.style.minHeight = "100vh";
-trash.style.backgroundColor = "white";
-trash.style.position = "relative";
+// trash.style.backgroundColor = "white";
+trash.style.position = "absolute";
 trash.style.left = "0";
 let trashicon = document.createElement("div");
 document.body.appendChild(trash);
@@ -116,33 +116,32 @@ input.addEventListener("blur", function (e) {
   e.target.value = "add item";
 });
 var style;
+var tex;
 input.addEventListener("keypress", function (e) {
   if (e.key === "Enter") {
-    e.preventDefault();
-    let arr = document.getElementsByClassName("todo");
-    let arr1 = arr[0];
+    var arr = document.querySelectorAll(".todo");
     var flag = false;
     if (input.value === null || input.value === "") {
-      window.alert("the Task cannot be empty !!");
+      tex = "the Task cannot be empty !!";
+      errorss(tex);
       flag = true;
     }
     if (flag === false) {
-      var list = document.querySelectorAll(".donelist");
-
-      for (let i = 0; i < list.length; i++) {
-        if (list[i].textContent === input.value) {
-          window.alert("this task is already done before");
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].textContent === input.value) {
+          tex = "this task is already added before";
+          errorss(tex);
           flag = true;
           break;
         }
       }
     }
-
     if (flag === false) {
-      for (let i = 0; i < arr1.childNodes.length; i++) {
-        console.log(arr1.childNodes[i].innerText);
-        if (arr1.childNodes[i].innerText === input.value) {
-          window.alert("this task is already added before");
+      var list = document.querySelectorAll(".donelist");
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].textContent === input.value) {
+          tex = "this task is already done before";
+          errorss(tex);
           flag = true;
           break;
         }
@@ -166,68 +165,85 @@ input.addEventListener("keypress", function (e) {
 });
 
 let elemns = document.querySelector(".todo");
-elemns.addEventListener("mousemove", mmove, false);
+elemns.addEventListener("mouseenter", mmove, true);
 function mmove(event) {
   if (event.target.classList.contains("added")) {
-    var p = event.target.parentElement;
-    var index = Array.prototype.indexOf.call(p.children, event.target);
-    let comp = document.getElementsByClassName("done");
-    let dele = document.getElementsByClassName("delet");
-    comp[index].style.cursor = "pointer";
-    dele[index].style.cursor = "pointer";
-    comp[index].style.visibility = "visible";
-    dele[index].style.visibility = "visible";
+    let comp = event.target.getElementsByClassName("done");
+    let dele = event.target.getElementsByClassName("delet");
     event.target.style.color = "black";
-    comp[index].addEventListener("click", function (e) {
-      let completed = document.createElement("div");
-      completed.className = "donelist";
-      completed.style.width = "90%";
-      completed.style.height = "5rem";
-      completed.style.display = "flex";
-      completed.style.alignItems = "center";
-      completed.style.justifyContent = "center";
-      completed.style.backgroundColor = "#00800074";
-      completed.style.color = "black";
-      completed.style.margin = "auto";
-      completed.style.marginTop = "2.5rem";
-      completed.style.borderRadius = "20px";
-      completed.style.visibility = "hidden";
-      completed.textContent = this.parentNode.textContent;
-      done1.appendChild(completed);
+    comp[0].style.cursor = "pointer";
+    dele[0].style.cursor = "pointer";
+    comp[0].style.visibility = "visible";
+    dele[0].style.visibility = "visible";
+    elemns.addEventListener("mouseleave", mleave, true);
+    comp[0].addEventListener("click", function (e) {
+      var hascreated = false;
+      var ddlist = document.getElementsByClassName("donelist");
+      for (let i = 0; i < ddlist.length; i++) {
+        if (ddlist[i].textContent === event.target.textContent) {
+          hascreated = true;
+        }
+      }
+      if (hascreated === false) {
+        let completed = document.createElement("div");
+        completed.className = "donelist";
+        completed.style.width = "90%";
+        completed.style.height = "5rem";
+        completed.style.display = "flex";
+        completed.style.alignItems = "center";
+        completed.style.justifyContent = "center";
+        completed.style.backgroundColor = "#00800074";
+        completed.style.color = "black";
+        completed.style.margin = "auto";
+        completed.style.marginTop = "2.5rem";
+        completed.style.borderRadius = "20px";
+        completed.style.visibility = "hidden";
+        completed.textContent = this.parentNode.textContent;
+        done1.appendChild(completed);
+      }
       this.parentNode.remove();
     });
-    dele[index].addEventListener("click", function (e) {
-      let completed = document.createElement("div");
-      completed.className = "trashlist";
-      completed.style.width = "90%";
-      completed.style.height = "5rem";
-      completed.style.display = "flex";
-      completed.style.alignItems = "center";
-      completed.style.justifyContent = "center";
-      completed.style.backgroundColor = "red";
-      completed.style.color = "black";
-      completed.style.margin = "auto";
-      completed.style.marginTop = "2.5rem";
-      completed.style.borderRadius = "20px";
-      completed.style.marginLeft = "1rem";
-      completed.style.visibility = "hidden";
-      completed.style.position = "absolute";
-      completed.textContent = this.parentNode.textContent;
-      let overlay = document.createElement("div");
-      completed.appendChild(overlay);
-      overlay.className = "overlay";
-      overlay.style.position = "relative";
-      overlay.style.width = "20%";
-      overlay.style.height = "100%";
-      overlay.style.right = "-70px";
-      overlay.style.backgroundColor = "blanchedalmond";
-      overlay.style.backgroundImage = "url('./arrow-.svg')";
-      overlay.style.backgroundSize = "contain";
-      overlay.style.backgroundPosition = "center right";
-      overlay.style.backgroundRepeat = "no-repeat";
-      overlay.style.cursor = "pointer";
-      overlay.addEventListener("click", returnback, false);
-      trash.appendChild(completed);
+    dele[0].addEventListener("click", function (e) {
+      var hascreated = false;
+      var ddlist = document.getElementsByClassName("trashlist");
+      for (let i = 0; i < ddlist.length; i++) {
+        if (ddlist[i].textContent === event.target.textContent) {
+          hascreated = true;
+        }
+      }
+      if (hascreated === false) {
+        let completed = document.createElement("div");
+        completed.className = "trashlist";
+        completed.style.width = "90%";
+        completed.style.height = "5rem";
+        completed.style.display = "flex";
+        completed.style.alignItems = "center";
+        completed.style.justifyContent = "center";
+        completed.style.backgroundColor = "red";
+        completed.style.color = "black";
+        completed.style.margin = "auto";
+        completed.style.marginTop = "2.5rem";
+        completed.style.borderRadius = "20px";
+        completed.style.marginLeft = "1rem";
+        completed.style.visibility = "hidden";
+        completed.style.position = "relative";
+        completed.textContent = this.parentNode.textContent;
+        let overlay = document.createElement("div");
+        completed.appendChild(overlay);
+        overlay.className = "overlay";
+        overlay.style.position = "relative";
+        overlay.style.width = "20%";
+        overlay.style.height = "100%";
+        overlay.style.right = "-70px";
+        overlay.style.backgroundColor = "blanchedalmond";
+        overlay.style.backgroundImage = "url('./arrow-.svg')";
+        overlay.style.backgroundSize = "contain";
+        overlay.style.backgroundPosition = "center right";
+        overlay.style.backgroundRepeat = "no-repeat";
+        overlay.style.cursor = "pointer";
+        overlay.addEventListener("click", returnback, false);
+        trash.appendChild(completed);
+      }
       this.parentNode.remove();
     });
   }
@@ -247,15 +263,66 @@ function returnback(e) {
   this.parentElement.remove();
 }
 
-elemns.addEventListener("mouseleave", mleave, true);
 function mleave(event) {
   if (event.target.classList.contains("added")) {
-    var p = event.target.parentElement;
-    var index = Array.prototype.indexOf.call(p.children, event.target);
-    let comp = document.getElementsByClassName("done");
-    let dele = document.getElementsByClassName("delet");
-    comp[index].style.visibility = "hidden";
-    dele[index].style.visibility = "hidden";
+    let comp = event.target.getElementsByClassName("done");
+    let dele = event.target.getElementsByClassName("delet");
+    comp[0].style.visibility = "hidden";
+    dele[0].style.visibility = "hidden";
     event.target.style.color = "white";
+  }
+}
+function errorss(text) {
+  var back = document.createElement("div");
+  back.style.width = "100%";
+  back.style.height = "100%";
+  back.style.position = "absolute";
+  back.style.backgroundColor = "#000000a8";
+  back.className = "popup";
+  var errorbox = document.createElement("div");
+  errorbox.className = "error";
+  errorbox.style.backgroundColor = "white";
+  errorbox.style.width = "25%";
+  errorbox.style.height = "25%";
+  errorbox.style.borderRadius = "20px";
+  errorbox.style.boxShadow = "rgba(0, 0, 0, 0.35) 0px 5px 15px;";
+  errorbox.style.display = "flex";
+  errorbox.style.alignItems = "center";
+  errorbox.style.justifyContent = "center";
+  errorbox.style.flexFlow = "column nowrap";
+  errorbox.style.position = "absolute";
+  errorbox.style.left = "50%";
+  errorbox.style.top = "20%";
+  errorbox.style.zIndex = "1";
+  errorbox.style.transform = "translate(-50%,-20%)";
+  var h = document.createElement("h1");
+  h.textContent = "ERROR";
+  h.style.color = "red";
+  h.style.position = "relative";
+  var para = document.createElement("p");
+  para.style.color = "#1E3050";
+  para.textContent = text;
+  para.style.position = "relative";
+  var errorimg = document.createElement("div");
+  errorimg.style.backgroundImage = "url('./error.svg')";
+  errorimg.style.backgroundSize = "contain";
+  errorimg.style.backgroundPosition = "center right";
+  errorimg.style.backgroundRepeat = "no-repeat";
+  errorimg.style.position = "relative";
+  errorimg.style.width = "15%";
+  errorimg.style.height = "25%";
+  var p = document.createElement("p");
+  p.style.color = "#2fdd3c";
+  p.textContent = "Right click mouse to continue";
+  p.style.position = "relative";
+  errorbox.appendChild(errorimg);
+  errorbox.appendChild(h);
+  errorbox.appendChild(para);
+  errorbox.appendChild(p);
+  back.appendChild(errorbox);
+  document.body.appendChild(back);
+  back.addEventListener("click", closepopup, false);
+  function closepopup(e) {
+    this.style.visibility = "hidden";
   }
 }
